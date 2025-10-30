@@ -6,7 +6,7 @@
             Scanner sc = new Scanner(System.in);
             TaskManager taskManager = new TaskManager();
             while(run){
-                System.out.println("\n 1.Add Task \n 2.View Task \n 3.View Task By Priority\n 4.View Task By Categories\n 5.Exit");
+                System.out.println("\n 1.Add Task \n 2.View Task \n 3.View Task By Priority\n 4.View Task By Categories\n 5.Save Tasks to File\n 6.Exit");
                 System.out.println("Enter user choice");
                 int userChoice = Integer.parseInt(sc.nextLine());
 
@@ -24,9 +24,12 @@
                         taskManager.viewTaskByCategory();
                         break;
                     case 5:
-                        System.out.println("Exit");
+                        taskManager.saveAsTextFile();
+                        break;
+                    case 6:
+                        System.out.println("Exiting from App...");
                         run = false;
-                        sc.close();
+                        break;
                 }
             }
         }

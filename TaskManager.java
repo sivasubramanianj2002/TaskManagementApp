@@ -2,7 +2,9 @@ import java.util.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.text.ParseException;
-
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.File;
 class TaskManager{
     Map<Integer,Task> map = new HashMap<>();
     Scanner sc = new Scanner(System.in);
@@ -154,6 +156,41 @@ class TaskManager{
                         task.getTaskPriority(),
                         setToString(task.getCategoriesSet()));
             }
+        }
+    }
+
+    public void saveAsTextFile(){
+        if(map.isEmpty())
+        {
+            System.out.println("No tasks to save");
+            return;
+        }
+        String fileName = "tasks.txt";
+        File  file = new File(fileName);
+        if(file.exists())
+        {
+            System.out.println("File" + fileName + "already exists");
+            System.out.println("Enter a new file name without extension");
+
+            String newName = sc.nextLine();
+            if(!newName.isEmpty())
+            {
+                fileName = newName;
+            }
+        }
+        try(FileWriter fw = new FileWriter(fileName)){
+            for(Task task : map.values()){
+                fw.write("ID: " + task.getTaskId() + "\n");
+                fw.write("Name: " + task.getTaskName() + "\n");
+                fw.write("Description: " + task.getTaskDescription() + "\n");
+                fw.write("Due Date: " + getFormattedDate(task.getDueDate()) + "\n");
+                fw.write("Priority: " + task.getTaskPriority() + "\n");
+                fw.write("Categories: " + setToString(task.getCategoriesSet()) + "\n");
+                fw.write("-------------------------------\n");
+            }
+        } catch(IOException e){
+            System.out.println("Error saving tasks");
+
         }
     }
 
